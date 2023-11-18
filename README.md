@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="100" alt="Nest Logo" /></a>
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
@@ -12,7 +12,7 @@
 
 A CRUD Task Management App to learn a new backend framework!
 
-# Modules:
+### Modules:
 - AuthModule: Authentication and Authorization (JWT)
 - TaskModule: Task entities, service, repository, status validation pipe, etc.
 
