@@ -1,6 +1,7 @@
 import { Controller, Body, Get, Post } from '@nestjs/common';
 import { TasksService } from './tasks.service'; // injected dependency
 import { Task } from './task.model';
+import { CreateTaskDto } from './dto/create-task.dto';
 
 // for '/tasks' route, this controller will handle all requests with its defined methods
 @Controller('tasks')
@@ -17,15 +18,8 @@ export class TasksController {
     return this.tasksService.getAllTasks();
   }
 
-  // You can extract the entire request body with @Body body (assigning the whole body onto the var, 'body')
-  // but sometimes you only want to extract certain parameters from the body such as title and desc, which
-  // guards against other random fields possibly showing up that were sent from the client.
   @Post()
-  // instead extract only title and description from the body by specifying the keys upon invocation of decorator
-  createTask(
-    @Body('title') title: string,
-    @Body('description') description: string,
-  ): Task {
-    return this.tasksService.createTask(title, description);
+  createTask(@Body() createTaskDto: CreateTaskDto): Task {
+    return this.tasksService.createTask(createTaskDto);
   }
 }
