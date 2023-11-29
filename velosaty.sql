@@ -255,6 +255,7 @@ CREATE TABLE college_app_info (
 CREATE TABLE college_admissions_info (
   id SERIAL PRIMARY KEY,
   college_id INT,
+  app_fee SMALLINT,
   sat_act_required BOOLEAN,
   sat_range VARCHAR(10),
   act_range VARCHAR(5),
@@ -293,7 +294,7 @@ CREATE TABLE academics_summary (
   credits_to_graduate SMALLINT,
   avg_class_size SMALLINT,
   student_faculty_ratio NUMERIC(3, 1),
-  study_amount VARCHAR(50) -- from collegeai survey answer types
+  study_amount VARCHAR(50), -- from collegeai survey answer types
   professor_quality VARCHAR(255), -- from collegeai reason Ids
 
   FOREIGN KEY (college_id) REFERENCES colleges(id),
