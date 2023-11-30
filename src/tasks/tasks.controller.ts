@@ -9,9 +9,10 @@ import {
   Query,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service'; // injected dependency
-import { Task, TaskStatus } from './task.model';
+import { Task } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDTO } from './dto/get-tasks-filter.dto';
+import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 
 // for '/tasks' route, this controller will handle all requests with its defined methods
 @Controller('tasks')
@@ -55,8 +56,9 @@ export class TasksController {
   // rather than using a dto, keep as normal because we would need 2 dtos (one for param, one for req body)
   updateStatus(
     @Param('id') id: string,
-    @Body('status') status: TaskStatus,
+    @Body() updateTaskStatusDto: UpdateTaskStatusDto, // to validate the TaskStatus type, we can create a dto with validation decorators
   ): Task {
+    const { status } = updateTaskStatusDto;
     return this.tasksService.updateStatus(id, status);
   }
 }

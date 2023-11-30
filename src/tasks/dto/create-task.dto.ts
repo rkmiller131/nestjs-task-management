@@ -31,10 +31,10 @@
 // }
 
 // Instead, let's create a DTO for these parameters and use it in both places:
-export class CreateTaskDto {
-  title: string;
-  description: string;
-}
+// export class CreateTaskDto {
+//   title: string;
+//   description: string;
+// }
 // Now our controller method looks like this:
 //   @Post()
 //   createTask(@Body() createTaskDto: CreateTaskDto): Task {
@@ -47,3 +47,18 @@ export class CreateTaskDto {
 //... etc.
 
 // Future improvements: add validation to the DTO to ensure that the title and description are not empty strings
+
+// VALIDATION:
+// yarn add class-validator class-transformer
+// Check the documentation for a huge table on all the decorators you can use for validation:
+// https://github.com/typestack/class-validator
+
+import { IsNotEmpty } from 'class-validator';
+
+export class CreateTaskDto {
+  @IsNotEmpty()
+  title: string;
+
+  @IsNotEmpty()
+  description: string;
+}

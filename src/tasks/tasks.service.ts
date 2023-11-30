@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Task, TaskStatus } from './task.model';
 import { v4 as uuid } from 'uuid';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -34,7 +34,15 @@ export class TasksService {
   }
 
   getTaskById(id: string): Task {
-    return this.tasks.find((task) => task.id === id);
+    // try to get task
+    const found = this.tasks.find((task) => task.id === id);
+    // if not found, throw a error (404 not found)
+    if (!found) {
+      // throws a new object of the not found exeption class, which bubbles up into the internals of NestJs
+      throw new NotFoundException(`Couldn't find task with id: ${id}`);
+    }
+    // otherwise return the found task
+    return found;
   }
 
   createTask(createTaskDto: CreateTaskDto): Task {
@@ -51,9 +59,14 @@ export class TasksService {
   }
 
   deleteTaskById(id: string): void {
-    for (let i = 0; i < this.tasks.length; i++) {
-      if (this.tasks[i].id === id) {
-        this.tasks.splice(i, 1);
+    // since there is an error handling already in place for gettingTaskById, this can work
+    // for deleting too in that it will throw an error if we try to delete a task that doenst exist
+    const found = this.getTaskById(id);
+    if (found) {
+      for (let i = 0; i < this.tasks.length; i++) {
+        if (this.tasks[i].id === id) {
+          this.tasks.splice(i, 1);
+        }
       }
     }
   }
